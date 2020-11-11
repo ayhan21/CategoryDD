@@ -1,0 +1,104 @@
+﻿<Window x:Class="CategoryDD.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CategoryDD"
+        mc:Ignorable="d"
+        x:Name="window"
+        Title="Drag and Drop" Height="470" Width="800" Background="#FF262727">
+
+    <Grid x:Name="grid">
+        <TreeView x:Name="treeView" Background="#FF161B1B" Margin="28,18,0,45" Width="152" BorderBrush="#FF161B1B" Cursor="" HorizontalAlignment="Left">
+            <TreeViewItem x:Uid="1" x:Name="a" Header="Category A" IsExpanded="True" Foreground="White" FontSize="15">
+                <TextBlock Text="Item A1" />
+                <TextBlock Text="Item A2" />
+                <TextBlock Text="Item A3" />
+                <TextBlock Text="Item A4" />
+            </TreeViewItem>
+            <TreeViewItem x:Uid="2" x:Name="b" Header="Category B" Foreground="White" FontSize="15">
+                <TextBlock Text="Item B1" />
+                <TextBlock Text="Item B2" />
+                <TextBlock Text="Item B3" />
+                <TextBlock Text="Item B4" />
+            </TreeViewItem>
+            <TreeViewItem x:Uid="3" x:Name="c" Header="Category C" Foreground="White" FontSize="15">
+                <TextBlock Text="Item C1" />
+                <TextBlock Text="Item C2" />
+                <TextBlock Text="Item C3" />
+                <TextBlock Text="Item C4" />
+            </TreeViewItem>
+            <TreeView.Resources>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="FontSize" Value="14"/>
+                    <Setter Property="Width" Value="100"/>
+                    <Setter Property="Height" Value="20"/>
+                    <EventSetter Event="MouseDown" Handler="TextBlock_MouseDown"/>
+                    <EventSetter Event="MouseEnter" Handler="TextBlock_MouseEnter"/>
+                    <EventSetter Event="MouseLeave" Handler="TextBlock_MouseLeave"/>
+                </Style>
+            </TreeView.Resources>
+            <TreeView.Style>
+                <Style/>
+            </TreeView.Style>
+            <TreeView.FocusVisualStyle>
+                <Style/>
+            </TreeView.FocusVisualStyle>
+        </TreeView>
+
+        <StackPanel x:Name="targetPanel" Orientation="Vertical" Margin="354,25,362,20">
+            <TextBlock x:Uid="1" x:Name="targetA" Text="A"/>
+            <TextBlock x:Uid="2" x:Name="targetB" Text="B"/>
+            <TextBlock x:Uid="3" x:Name="targetC" Text="C"/>
+            <TextBlock x:Uid="4" x:Name="targetD" Text="D"/>
+            <TextBlock x:Uid="5" x:Name="targetE" Text="E"/>
+            <Button Content="Clear" HorizontalAlignment="Left" Margin="0,20" VerticalAlignment="Top" Width="64"
+                    Foreground="White" Background="#FF161B1B" Click="Button_Click"/>
+
+            <StackPanel.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="HorizontalAlignment" Value="Left"/>
+                    <Setter Property="TextWrapping" Value="Wrap"/>
+                    <Setter Property="VerticalAlignment" Value="Top"/>
+                    <Setter Property="Height" Value="58"/>
+                    <Setter Property="Width" Value="64"/>
+                    <Setter Property="Margin" Value="0,0,0,10"/>
+                    <Setter Property="FontSize" Value="40"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Background" Value="#FF161B1B"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="TextAlignment" Value="Center"/>
+                    <Setter Property="AllowDrop" Value="True"/>
+                    <EventSetter Event="DragEnter" Handler="TextBlock_DragEnter"/>
+                    <EventSetter Event="DragLeave" Handler="TextBlock_DragLeave"/>
+                </Style>
+            </StackPanel.Resources>
+        </StackPanel>
+
+        <StackPanel x:Name="stack" Orientation="Vertical" Margin="420,25,0,0">
+            <TextBlock x:Uid="1" x:Name="blockA" Text="" />
+            <TextBlock x:Uid="2" x:Name="blockB" Text="" />
+            <TextBlock x:Uid="3" x:Name="blockC" Text="" />
+            <TextBlock x:Uid="4" x:Name="blockD" Text="" />
+            <TextBlock x:Uid="5" x:Name="blockE" Text="" />
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="HorizontalAlignment" Value="Left"/>
+                    <Setter Property="TextWrapping" Value="Wrap"/>
+                    <Setter Property="VerticalAlignment" Value="Top"/>
+                    <Setter Property="Height" Value="58"/>
+                    <Setter Property="Width" Value="322"/>
+                    <Setter Property="Margin" Value="0,0,0,10"/>
+                    <Setter Property="FontSize" Value="14"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Background" Value="#FF292B2B"/>
+                    <Setter Property="AllowDrop" Value="True"/>
+                    <EventSetter Event="Drop" Handler="TextBlock_Drop"/>
+                    <EventSetter Event="DragEnter" Handler="TextBlock_DragEnter"/>
+                    <EventSetter Event="DragLeave" Handler="TextBlock_DragLeave"/>
+                </Style>
+            </StackPanel.Resources>
+        </StackPanel>
+    </Grid>
+</Window>
