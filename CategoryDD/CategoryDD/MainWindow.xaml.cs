@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Configuration;
 using System.Linq;
@@ -19,63 +20,212 @@ namespace CategoryDD
 {
     public partial class MainWindow : Window
     {
-        List<string> items = new List<string>();
+        ObservableCollection<Item> items;
+        List<string> blockItems = new List<string>();
+
         public MainWindow()
         {
             InitializeComponent();
+
+            items = new ObservableCollection<Item>
+            {
+                new Item
+                {
+                    Name = "Category A",
+                    Children = new ObservableCollection<Item>
+                    {
+                        new Item
+                        {
+                            Name = "Item A1"
+                        },
+                        new Item
+                        {
+                            Name = "Item A2"
+                        },
+                        new Item
+                        {
+                            Name = "Item A3"
+                        },
+                        new Item
+                        {
+                            Name = "Item A4"
+                        }
+                    }
+                },
+                 new Item
+                {
+                    Name = "Category B",
+                    Children = new ObservableCollection<Item>
+                    {
+                        new Item
+                        {
+                            Name = "Item B1"
+                        },
+                        new Item
+                        {
+                            Name = "Item B2"
+                        },
+                        new Item
+                        {
+                            Name = "Item B3"
+                        },
+                        new Item
+                        {
+                            Name = "Item B4"
+                        }
+                    }
+                 },
+                    new Item
+                    {
+                    Name = "Category C",
+                    Children = new ObservableCollection<Item>
+                    {
+                        new Item
+                        {
+                            Name = "Item C1"
+                        },
+                        new Item
+                        {
+                            Name = "Item C2"
+                        },
+                        new Item
+                        {
+                            Name = "Item C3"
+                        },
+                        new Item
+                        {
+                            Name = "Item C4"
+                        }
+                    }
+                }
+            };
+
+            treeView.ItemsSource = items;
+            addNewCat("Category D");
         }
 
-        private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
+        public void addNewCat(string name)
         {
-            TextBlock textBlock = (TextBlock)sender;
-            textBlock.Background = Brushes.Purple;
+            items.Add(new Item { Name = name });
         }
 
-        private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
+        private void TextBlock_DragEnter(object sender, DragEventArgs e)
+        {
+            TextBlock itemBlock = (TextBlock)e.Data.GetData(typeof(TextBlock));
+            TextBlock targetBlock = (TextBlock)sender;
+
+            if (IsMatch(itemBlock, targetBlock))
+            {
+                targetBlock.Background = Brushes.LimeGreen;
+            }
+            else
+            {
+                targetBlock.Background = Brushes.Salmon;
+            }
+
+        }
+        private void TextBlock_DragLeave(object sender, DragEventArgs e)
+        {
+            TextBlock block = (TextBlock)sender;
+            block.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF161B1B"));
+        }
+        private void TextBlock_MouseDown(object sender, MouseButtonEventArgs e)
         {
             TextBlock textBlock = (TextBlock)sender;
-            textBlock.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF161B1B"));
+            StackPanel stackPanel = (StackPanel)textBlock.Parent;
+            DataObject dataObject = new DataObject(textBlock);
+            DragDrop.DoDragDrop(textBlock, dataObject, DragDropEffects.Move);
+        }
+
+        private void TextBlock_DragOver(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private bool IsMatch(TextBlock dragItem, TextBlock target)
+        {
+            string category = GetCategory(dragItem);
+
+            if (category.Equals(target.Uid) || target.Uid == "Category E")
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static UIElement GetByUid(DependencyObject rootElement, string uid)
+        {
+            foreach (UIElement element in LogicalTreeHelper.GetChildren(rootElement).OfType<UIElement>())
+            {
+                if (element.Uid == uid)
+                    return element;
+                UIElement resultChildren = GetByUid(element, uid);
+                if (resultChildren != null)
+                    return resultChildren;
+            }
+            return null;
+        }
+
+        private void SetText(TextBlock dragItem, TextBlock target)
+        {
+            TextBlock textDest = (TextBlock)GetByUid(stack, target.Uid);
+            string s = textDest.Uid;
+
+            if (textDest.Text == "")
+            {
+                textDest.Text = dragItem.Text;
+            }
+            else
+            {
+                blockItems = textDest.Text.Split(", ").ToList();
+                if (!blockItems.Contains(dragItem.Text))
+                {
+                    blockItems.Add(dragItem.Text);
+                }
+                textDest.Text = string.Join(", ", blockItems);
+            }
         }
 
         private void TextBlock_Drop(object sender, DragEventArgs e)
         {
-            TextBlock textBlock = (TextBlock)e.Data.GetData(typeof(TextBlock));
-            TextBlock block = (TextBlock)sender;
-            TreeViewItem treeViewItem = (TreeViewItem)textBlock.Parent;
+            TextBlock itemBlock = (TextBlock)e.Data.GetData(typeof(TextBlock));
+            TextBlock targetBlock = (TextBlock)sender;
+            targetBlock.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF161B1B"));
 
-            if (IsMatch(treeViewItem.Uid, block.Uid))
+            if (IsMatch(itemBlock, targetBlock))
             {
-                Check(textBlock.Text, block.Uid);
-                if (block.Text == "")
-                {
-                    block.Text = textBlock.Text;
-                }
-                else
-                {
-                   items = block.Text.Split(", ").ToList();
-                    if (!items.Contains(textBlock.Text))
-                    {
-                        items.Add(textBlock.Text);
-                    }
-
-                    block.Text = string.Join(", ", items);
-
-                }
-               
+                Check(itemBlock.Text, GetByUid(stack, targetBlock.Uid).Uid);
+                SetText(itemBlock, targetBlock);
             }
-
         }
 
-        private void Check(string item, string blockId)
+        private string GetCategory(TextBlock dragItem)
+        {
+            string category = "";
+            foreach (var i in items)
+            {
+                foreach (var c in i.Children)
+                {
+                    if (c.Name.Equals(dragItem.Text))
+                    {
+                        category = i.Name;
+                    }
+                }
+            }
+            return category;
+        }
+
+        private void Check(string newItem, string blockId)
         {
             List<string> itemList = new List<string>();
 
-            if (blockId != "5")
+            if (blockId != "Category E")
             {
                 itemList = blockE.Text.Split(", ").ToList();
-                if (itemList.Contains(item))
+                if (itemList.Contains(newItem))
                 {
-                    itemList.Remove(item);
+                    itemList.Remove(newItem);
                     blockE.Text = string.Join(", ", itemList);
                 }
                 return;
@@ -83,91 +233,26 @@ namespace CategoryDD
 
             List<TextBlock> textBlocks = new List<TextBlock> { blockA, blockB, blockC };
 
-            foreach(var block in textBlocks)
+            foreach (var block in textBlocks)
             {
                 itemList = block.Text.Split(", ").ToList();
-                if (itemList.Contains(item))
+                if (itemList.Contains(newItem))
                 {
-                    itemList.Remove(item);
+                    itemList.Remove(newItem);
                     block.Text = string.Join(", ", itemList);
                 }
             }
-           
+
         }
-
-        private bool IsMatch(string dragItem, string dragTarget)
+        private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
         {
-            if (dragTarget == "5")
-            {
-                targetE.Background = Brushes.LimeGreen;
-                return true;
-            }
-            if(dragItem == dragTarget)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private void TextBlock_DragEnter(object sender, DragEventArgs e)
-        {
-            TextBlock textBlock = (TextBlock)e.Data.GetData(typeof(TextBlock));
-            TextBlock block = (TextBlock)sender;
-            TreeViewItem treeViewItem = (TreeViewItem)textBlock.Parent;
-            SetBoxColor(IsMatch(treeViewItem.Uid, block.Uid), block.Uid);
-        }        
-
-        private void SetBoxColor(bool b, string id)
-        {
-            Brush brush = Brushes.LimeGreen;
-            if (!b)
-            {
-                brush = Brushes.Salmon;
-            }
-            switch (id)
-            {
-                case "1":
-                    targetA.Background = brush;
-                    break;
-                case "2":
-                    targetB.Background = brush;
-                    break;
-                case "3":
-                    targetC.Background = brush;
-                    break;
-                case "4":
-                    targetD.Background = brush;
-                    break;
-                case "5":
-                    targetE.Background = brush;
-                    break;
-            }
-        }
-
-        private void TextBlock_DragLeave(object sender, DragEventArgs e)
-        {
-            AllBlack();
-        }
-
-        private void TextBlock_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            e.Handled = true;
             TextBlock textBlock = (TextBlock)sender;
             textBlock.Background = Brushes.Purple;
-
-            DataObject dataObject = new DataObject(textBlock);
-            DragDrop.DoDragDrop(textBlock, dataObject, DragDropEffects.Move);
-            AllBlack();
         }
-
-        private void AllBlack()
+        private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
         {
-            Brush brush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF161B1B"));
-            targetA.Background = brush;
-            targetB.Background = brush;
-            targetC.Background = brush;
-            targetD.Background = brush;
-            targetE.Background = brush;
+            TextBlock textBlock = (TextBlock)sender;
+            textBlock.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF161B1B"));
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -175,7 +260,18 @@ namespace CategoryDD
             blockA.Text = "";
             blockB.Text = "";
             blockC.Text = "";
+            blockD.Text = "";
             blockE.Text = "";
         }
+    }
+
+    public class Item
+    {
+        public Item()
+        {
+            Children = new ObservableCollection<Item>();
+        }
+        public string Name { get; set; }
+        public ObservableCollection<Item> Children { get; set; }
     }
 }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\source\\repos\\CategoryDD\\CategoryDD\\CategoryDD.csproj": {}
+    "C:\\Users\\User\\source\\repos\\Cat\\CategoryDD\\CategoryDD\\CategoryDD.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\source\\repos\\CategoryDD\\CategoryDD\\CategoryDD.csproj": {
+    "C:\\Users\\User\\source\\repos\\Cat\\CategoryDD\\CategoryDD\\CategoryDD.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\source\\repos\\CategoryDD\\CategoryDD\\CategoryDD.csproj",
+        "projectUniqueName": "C:\\Users\\User\\source\\repos\\Cat\\CategoryDD\\CategoryDD\\CategoryDD.csproj",
         "projectName": "CategoryDD",
-        "projectPath": "C:\\Users\\User\\source\\repos\\CategoryDD\\CategoryDD\\CategoryDD.csproj",
+        "projectPath": "C:\\Users\\User\\source\\repos\\Cat\\CategoryDD\\CategoryDD\\CategoryDD.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\source\\repos\\CategoryDD\\CategoryDD\\obj\\",
+        "outputPath": "C:\\Users\\User\\source\\repos\\Cat\\CategoryDD\\CategoryDD\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
