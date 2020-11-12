@@ -101,12 +101,32 @@ namespace CategoryDD
             };
 
             treeView.ItemsSource = items;
-            addNewCat("Category D");
+
+            Item newItem = new Item { Name = "Category D" };
+            AddNewCat(newItem);
+            AddNewItem(newItem, "Item D");
+
         }
 
-        public void addNewCat(string name)
+        public void AddNewCat(string name)
         {
             items.Add(new Item { Name = name });
+        }
+
+        public void AddNewCat(Item item)
+        {
+            if (!items.Contains(item))
+            {
+                items.Add(item);
+            }
+        }
+
+        public void AddNewItem(Item category, string itemName)
+        {
+            if (items.Contains(category))
+            {
+                category.Children.Add(new Item { Name = itemName });
+            }
         }
 
         private void TextBlock_DragEnter(object sender, DragEventArgs e)
@@ -170,7 +190,6 @@ namespace CategoryDD
         private void SetText(TextBlock dragItem, TextBlock target)
         {
             TextBlock textDest = (TextBlock)GetByUid(stack, target.Uid);
-            string s = textDest.Uid;
 
             if (textDest.Text == "")
             {
