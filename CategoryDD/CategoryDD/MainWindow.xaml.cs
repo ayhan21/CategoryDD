@@ -20,11 +20,12 @@ namespace CategoryDD
 {
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
-            InitializeComponent();            
+            InitializeComponent();
             dropTargetUC.Items = dragItemUC.Items;
-        }
+        }      
        
     }
 }
