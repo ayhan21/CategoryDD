@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="CategoryDD.DropTargetUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CategoryDD"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <StackPanel Orientation="Vertical" Margin="0">
+            <TextBlock x:Uid="Category A" Text="A"/>
+            <TextBlock x:Uid="Category B" Text="B"/>
+            <TextBlock x:Uid="Category C" Text="C"/>
+            <TextBlock x:Uid="Category D" Text="D"/>
+            <TextBlock x:Uid="Category E" Text="E"/>
+            <Button Content="Clear" HorizontalAlignment="Left" Margin="0,20" VerticalAlignment="Top" Width="64"
+                    Foreground="White" Background="#FF161B1B" Click="Button_Click"/>
+            <StackPanel.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="HorizontalAlignment" Value="Left"/>
+                    <Setter Property="TextWrapping" Value="Wrap"/>
+                    <Setter Property="VerticalAlignment" Value="Top"/>
+                    <Setter Property="Height" Value="58"/>
+                    <Setter Property="Width" Value="64"/>
+                    <Setter Property="Margin" Value="0,0,0,10"/>
+                    <Setter Property="FontSize" Value="40"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Background" Value="#FF161B1B"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="TextAlignment" Value="Center"/>
+                    <Setter Property="AllowDrop" Value="True"/>
+                    <EventSetter Event="DragEnter" Handler="TextBlock_DragEnter"/>
+                    <EventSetter Event="DragLeave" Handler="TextBlock_DragLeave"/>
+                    <EventSetter Event="Drop" Handler="TextBlock_Drop"/>
+                </Style>
+            </StackPanel.Resources>
+        </StackPanel>
+
+        <StackPanel x:Name="stack" Orientation="Vertical" Margin="64,0">
+            <TextBlock x:Uid="Category A" x:Name="blockA" Text="" />
+            <TextBlock x:Uid="Category B" x:Name="blockB" Text="" />
+            <TextBlock x:Uid="Category C" x:Name="blockC" Text="" />
+            <TextBlock x:Uid="Category D" x:Name="blockD" Text="" />
+            <TextBlock x:Uid="Category E" x:Name="blockE" Text="" />
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="HorizontalAlignment" Value="Left"/>
+                    <Setter Property="TextWrapping" Value="Wrap"/>
+                    <Setter Property="VerticalAlignment" Value="Top"/>
+                    <Setter Property="Height" Value="58"/>
+                    <Setter Property="Width" Value="322"/>
+                    <Setter Property="Margin" Value="0,0,0,10"/>
+                    <Setter Property="FontSize" Value="14"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Background" Value="#FF292B2B"/>
+                    <Setter Property="AllowDrop" Value="True"/>
+                </Style>
+            </StackPanel.Resources>
+        </StackPanel>
+    </Grid>
+</UserControl>

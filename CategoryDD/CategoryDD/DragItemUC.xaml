@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="CategoryDD.DragItemUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CategoryDD"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <StackPanel HorizontalAlignment="Left" Margin="20">
+            <TreeView Name="treeView" xmlns:obj="clr-namespace:CategoryDD"  Background="#FF161B1B" Width="200" Height="350">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate DataType = "{x:Type obj:Item}" ItemsSource="{Binding Path=Children}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Path=Name}"/>
+                            <StackPanel.Resources>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Foreground" Value="White"/>
+                                    <Setter Property="FontSize" Value="14"/>
+                                    <Setter Property="Width" Value="120"/>
+                                    <Setter Property="Height" Value="20"/>
+                                    <EventSetter Event="MouseMove" Handler="TextBlock_MouseMove"/>
+                                    <EventSetter Event="MouseEnter" Handler="TextBlock_MouseEnter"/>
+                                    <EventSetter Event="MouseLeave" Handler="TextBlock_MouseLeave"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="Purple" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Resources>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+
+            </TreeView>
+        </StackPanel>
+    </Grid>
+</UserControl>

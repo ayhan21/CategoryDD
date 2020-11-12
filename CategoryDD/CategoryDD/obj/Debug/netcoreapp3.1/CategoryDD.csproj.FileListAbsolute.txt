@@ -26,6 +26,7 @@ C:\Users\User\source\repos\Cat\CategoryDD\CategoryDD\bin\Debug\netcoreapp3.1\Cat
 C:\Users\User\source\repos\Cat\CategoryDD\CategoryDD\obj\Debug\netcoreapp3.1\CategoryDD.csprojAssemblyReference.cache
 C:\Users\User\source\repos\Cat\CategoryDD\CategoryDD\obj\Debug\netcoreapp3.1\MainWindow.g.cs
 C:\Users\User\source\repos\Cat\CategoryDD\CategoryDD\obj\Debug\netcoreapp3.1\App.g.cs
+C:\Users\User\source\repos\Cat\CategoryDD\CategoryDD\obj\Debug\netcoreapp3.1\GeneratedInternalTypeHelper.g.cs
 C:\Users\User\source\repos\Cat\CategoryDD\CategoryDD\obj\Debug\netcoreapp3.1\CategoryDD_MarkupCompile.cache
 C:\Users\User\source\repos\Cat\CategoryDD\CategoryDD\obj\Debug\netcoreapp3.1\CategoryDD_MarkupCompile.lref
 C:\Users\User\source\repos\Cat\CategoryDD\CategoryDD\obj\Debug\netcoreapp3.1\MainWindow.baml
@@ -36,4 +37,7 @@ C:\Users\User\source\repos\Cat\CategoryDD\CategoryDD\obj\Debug\netcoreapp3.1\Cat
 C:\Users\User\source\repos\Cat\CategoryDD\CategoryDD\obj\Debug\netcoreapp3.1\CategoryDD.dll
 C:\Users\User\source\repos\Cat\CategoryDD\CategoryDD\obj\Debug\netcoreapp3.1\CategoryDD.pdb
 C:\Users\User\source\repos\Cat\CategoryDD\CategoryDD\obj\Debug\netcoreapp3.1\CategoryDD.genruntimeconfig.cache
-C:\Users\User\source\repos\Cat\CategoryDD\CategoryDD\obj\Debug\netcoreapp3.1\GeneratedInternalTypeHelper.g.cs
+C:\Users\User\source\repos\Cat\CategoryDD\CategoryDD\obj\Debug\netcoreapp3.1\DragItemUC.g.cs
+C:\Users\User\source\repos\Cat\CategoryDD\CategoryDD\obj\Debug\netcoreapp3.1\DragItemUC.baml
+C:\Users\User\source\repos\Cat\CategoryDD\CategoryDD\obj\Debug\netcoreapp3.1\DropTargetUC.g.cs
+C:\Users\User\source\repos\Cat\CategoryDD\CategoryDD\obj\Debug\netcoreapp3.1\DropTargetUC.baml
